@@ -1,21 +1,19 @@
-lines = list(open('day4-input.txt'))
-
-matches = []
-for line in lines:
-    parts = line.split(':')
-    num_lists = parts[1].split('|')
-
-    def num_set(num_str):
-        return set([int(num) for num in num_str.strip().split()])
-
-    winners = num_set(num_lists[0])
-    my_numbers = num_set(num_lists[1])
-    matches.append(len(winners & my_numbers))
+def num_set(num_str):
+    return set([int(num) for num in num_str.strip().split()])
 
 
 def pts(m):
     return 0 if m == 0 else 1 if m == 1 else 2 * pts(m - 1)
 
+
+lines = list(open('day4-input.txt'))
+matches = []
+for line in lines:
+    parts = line.split(':')
+    num_lists = parts[1].split('|')
+    winners = num_set(num_lists[0])
+    my_numbers = num_set(num_lists[1])
+    matches.append(len(winners & my_numbers))
 
 pts_list = [pts(m) for m in matches]
 # part 1
