@@ -6,7 +6,7 @@ def main():
 
     # not my solution
     # hat tip reddit user 4HbQ and https://www.reddit.com/r/adventofcode/comments/189m3qw/comment/kbs9g3g
-    board = list(open('day3-input.txt'))
+    board = list(open('inputs/day3-input.txt'))
     chars = {(r, c): [] for r in range(140) for c in range(140)
              if board[r][c] not in '01234566789.'}
 

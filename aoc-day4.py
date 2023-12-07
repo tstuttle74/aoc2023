@@ -6,7 +6,7 @@ def pts(m):
     return 0 if m == 0 else 1 if m == 1 else 2 * pts(m - 1)
 
 
-lines = list(open('day4-input.txt'))
+lines = list(open('inputs/day4-input.txt'))
 matches = []
 for line in lines:
     parts = line.split(':')

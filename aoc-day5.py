@@ -17,7 +17,7 @@ def map_all(src_num, maps):
     return src_num
 
 
-lines = list(open('day5-input.txt'))
+lines = list(open('inputs/day5-input.txt'))
 #lines = list(open('day5-input-sample.txt'))
 seeds = []
 maps = []
