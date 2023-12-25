@@ -1,7 +1,6 @@
 from math import floor
 from typing import List, Tuple
 
-
 #lines = list(open('inputs/day10-sample.txt'))
 lines = list(open('inputs/day10.txt'))
 
@@ -12,7 +11,7 @@ for i, line in enumerate(lines):
         entrance = (i, line.index('S'))
     grid.append(line.strip())
 
-directions = {
+direction_coor_deltas = {
     'N': (-1, 0),
     'S': (1, 0),
     'E': (0, 1),
@@ -36,27 +35,29 @@ valid_directions = {
     'S': ['N', 'S', 'E', 'W'],
 }
 
-def char_at(coor: Tuple[int, int], dir: str) -> Tuple[str, Tuple[int, int]]:
-    x, y = coor
-    dx, dy = directions[dir]
+def char_at(xy: Tuple[int, int], direction: str) -> Tuple[str, Tuple[int, int]]:
+    x, y = xy
+    dx, dy = direction_coor_deltas[direction]
     x_dx = x + dx
     y_dy = y + dy
     return (grid[x_dx][y_dy], (x_dx, y_dy)) if 0 <= x_dx < len(grid) and 0 <= y_dy < len(grid[x]) else (None, None)
 
-def find_next(cur_coor, prior_cur) -> (Tuple[int, int], str):
-    for test_dir in valid_directions[grid[cur_coor[0]][cur_coor[1]]]:
-        char, coor = char_at(cur_coor, test_dir)
-        if char in valid_steps[test_dir] and coor != prior_cur:
+def find_next(cur_xy, prior_xy) -> (Tuple[int, int], str):
+    cur_char = grid[cur_xy[0]][cur_xy[1]]
+    for test_dir in valid_directions[cur_char]:
+        char, coor = char_at(cur_xy, test_dir)
+        if char in valid_steps[test_dir] and coor != prior_xy:
             return coor, char
-    raise Exception(f"no next step from {cur_coor}")
+    raise Exception(f"no next step from {cur_xy}")
 
-prior_coor = None
-cur_coor = entrance
+prior = None
+cur = entrance
 steps = []
-while cur_coor != entrance or prior_coor is None:
-    tmp, char = find_next(cur_coor, prior_coor)
-    prior_coor = cur_coor
-    cur_coor = tmp
-    steps.append(cur_coor)
+while cur != entrance or prior is None:
+    tmp, _ = find_next(cur, prior)
+    prior = cur
+    cur = tmp
+    steps.append(cur)
 
+print(f"correct max steps: 6846")
 print(f"max steps: {floor(len(steps)/2)}")
